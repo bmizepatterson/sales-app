@@ -11,7 +11,73 @@
 
     <h1 class="mt-5 mb-5">Sales Force One</h1>
 
-    <div id="root">
+    <div id="root" v-cloak>
+
+        <form class="form-inline mb-2">
+            <label for="item" class="sr-only">Item</label>
+            <input v-model="newItem.description" id="item" type="text" class="form-control mb-2 mr-sm-2" placeholder="Item" size="40">
+
+            <label for="qty" class="sr-only">Quantity</label>
+            <input v-model="newItem.qty" id="qty" type="number" class="form-control mb-2 mr-sm-2" placeholder="Qty" min="1" max="999" size="3">
+
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">$</div>
+                </div>
+                <label for="unitPrice" class="sr-only">Unit Price</label>
+                <input v-model="newItem.price" id="unitPrice" type="text" class="form-control" placeholder="Unit Price" size="10">
+            </div>
+
+            <div class="form-check mb-2">
+                <input v-model="newItem.taxed" id="taxable" type="checkbox" class="form-check-input" checked>
+                <label for="taxable" class="form-check-label">Taxable</label>
+            </div>
+
+            <button @click="addItem" type="button" class="btn btn-primary mb-2 ml-sm-5">Enter</button>
+        </form>
+
+        <div v-if="error" class="alert alert-warning">{{ error }}</div>
+
+        <table v-if="items.length" class="table mt-5">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th class="text-right">Unit Price</th>
+                    <th class="text-right">Item Subtotal</th>
+                    <th class="text-right">Tax</th>
+                    <th class="text-right">Item Total</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr v-for="item in items">
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.qty }}</td>
+                    <td class="currency">$ {{ item.price }}</td>
+                    <td class="currency">$ {{ item.subtotal }}</td>
+                    <td class="currency">$ {{ item.taxAmount }}</td>
+                    <td class="currency">$ {{ item.total }}</td>
+                </tr>
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <th colspan="5" class="text-right">Subtotal:</th>
+                    <td class="currency">$ {{ grandSubtotal }}</td>
+                </tr>
+                <tr>
+                    <th colspan="5" class="text-right">Tax:</th>
+                    <td class="currency">$ {{ grandTaxAmount }}</td>
+                </tr>
+                <tr>
+                    <th colspan="5" class="text-right">Total:</th>
+                    <td class="currency">$ {{ grandTotal }}</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div v-else class="alert alert-info">Add an item to the order.</div>
 
     </div>
 
