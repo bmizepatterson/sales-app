@@ -5,18 +5,15 @@ new Vue({
     data: {
 
         items: [],
-
         newItem: {
             description: '',
             qty: '',
             price: '',
             taxed: true
         },
-
         defaultTaxRate: 0.06,
-
-        error: ''
-
+        error: '',
+        hover: null
     },
 
     created: function() {
@@ -156,6 +153,11 @@ new Vue({
         clearForm: function() {
             this.newItem.description = this.newItem.qty = this.newItem.price = '';
             this.newItem.taxed = true;
+        },
+
+        deleteItem: function(index) {
+            this.items.splice(index, 1);
+            this.saveToSession();
         }
     }
 });

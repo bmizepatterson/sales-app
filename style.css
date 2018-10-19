@@ -1,14 +1,32 @@
 [v-cloak] {
     display: none;
 }
-.currency {
+
+#sales-table .currency {
     text-align: right;
 }
-.currency::before {
+#sales-table .currency::before {
     content: "$";
     float:left;
     padding-left: 10px;
 }
-tfoot {
+#sales-table .action-col {
+    padding-left:0;
+    padding-right:0;
+    width: 19px;
+}
+#sales-table td:last-child,
+#sales-table th:last-child
+{
+    padding-right: 23.8px;
+}
+#sales-table tfoot {
     border-top: 3px solid #dee2e6;
+}
+#sales-table .delete-button {
+    color: #dc3545;
+    transition: 0.3s;
+}
+#sales-table .delete-button:hover {
+    color: #c82333;
 }
