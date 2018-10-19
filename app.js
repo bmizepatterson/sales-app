@@ -18,8 +18,8 @@ new Vue({
     },
 
     created: function() {
-        if (localStorage.sales) {
-            this.items = JSON.parse(localStorage.sales);
+        if (sessionStorage.sales) {
+            this.items = JSON.parse(sessionStorage.sales);
         }
     },
 
@@ -93,7 +93,7 @@ new Vue({
                 this.newItem.price = '';
                 this.newItem.tax = 0;
 
-                this.saveToDisk();
+                this.saveToSession();
             }
         },
 
@@ -135,8 +135,8 @@ new Vue({
             return '-';
         },
 
-        saveToDisk: function() {
-            localStorage.setItem('sales', JSON.stringify(this.items));
+        saveToSession: function() {
+            sessionStorage.setItem('sales', JSON.stringify(this.items));
         }
 
     }
