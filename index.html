@@ -15,22 +15,22 @@
 
         <form class="form-inline mb-2">
             <label for="item" class="sr-only">Item</label>
-            <input v-model="newItem.description" id="item" type="text" class="form-control mb-2 mr-sm-2" placeholder="Item">
+            <input v-model="newItem.description" @keyup.enter="addItem" ref="itemInput" id="item" type="text" class="form-control mb-2 mr-sm-2" placeholder="Item" autofocus>
 
             <label for="qty" class="sr-only">Quantity</label>
-            <input v-model="newItem.qty" id="qty" type="number" class="form-control mb-2 mr-sm-2" placeholder="Qty" min="1" max="999" size="3">
+            <input v-model="newItem.qty" @keyup.enter="addItem" ref="qtyInput" id="qty" type="number" class="form-control mb-2 mr-sm-2" placeholder="Qty" min="1" max="999" size="3">
 
             <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">$</div>
                 </div>
                 <label for="unitPrice" class="sr-only">Unit Price</label>
-                <input v-model="newItem.price" id="unitPrice" type="text" class="form-control" placeholder="Unit Price" size="10">
+                <input v-model="newItem.price" @keyup.enter="addItem" ref="priceInput" id="unitPrice" type="text" class="form-control" placeholder="Unit Price" size="10">
             </div>
 
             <div class="form-check mb-2">
-                <input v-model="newItem.taxed" id="taxable" type="checkbox" class="form-check-input" checked>
-                <label for="taxable" class="form-check-label">Taxable</label>
+                <input v-model="newItem.taxed" ref="taxedInput" id="taxable" type="checkbox" class="form-check-input" checked>
+                <label for="taxable" @keyup.enter="addItem" class="form-check-label">Taxable</label>
             </div>
 
             <button @click="addItem" type="button" class="btn btn-primary mb-2 ml-sm-5">Enter</button>
@@ -38,44 +38,47 @@
 
         <div v-if="error" class="alert alert-warning">{{ error }}</div>
 
-        <table v-if="items.length" class="table mt-5">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Item</th>
-                    <th scope="col">Qty</th>
-                    <th class="text-right" scope="col">Unit Price</th>
-                    <th class="text-right" scope="col">Item Subtotal</th>
-                    <th class="text-right" scope="col">Tax</th>
-                    <th class="text-right" scope="col">Item Total</th>
-                </tr>
-            </thead>
+        <div v-if="items.length">
+            <table class="table mt-5">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Qty</th>
+                        <th class="text-right" scope="col">Unit Price</th>
+                        <th class="text-right" scope="col">Item Subtotal</th>
+                        <th class="text-right" scope="col">Tax</th>
+                        <th class="text-right" scope="col">Item Total</th>
+                    </tr>
+                </thead>
 
-            <tbody>
-                <tr v-for="item in items">
-                    <td>{{ item.description }}</td>
-                    <td>{{ item.qty }}</td>
-                    <td class="currency">$ {{ item.price }}</td>
-                    <td class="currency">$ {{ item.subtotal }}</td>
-                    <td class="currency">$ {{ item.taxAmount }}</td>
-                    <td class="currency">$ {{ item.total }}</td>
-                </tr>
-            </tbody>
+                <tbody>
+                    <tr v-for="item in items">
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.qty }}</td>
+                        <td class="currency">$ {{ item.price }}</td>
+                        <td class="currency">$ {{ item.subtotal }}</td>
+                        <td class="currency">$ {{ item.taxAmount }}</td>
+                        <td class="currency">$ {{ item.total }}</td>
+                    </tr>
+                </tbody>
 
-            <tfoot>
-                <tr>
-                    <th colspan="5" class="text-right">Subtotal:</th>
-                    <td class="currency">$ {{ grandSubtotal }}</td>
-                </tr>
-                <tr>
-                    <th colspan="5" class="text-right">Tax:</th>
-                    <td class="currency">$ {{ grandTaxAmount }}</td>
-                </tr>
-                <tr>
-                    <th colspan="5" class="text-right">Total:</th>
-                    <td class="currency">$ {{ grandTotal }}</td>
-                </tr>
-            </tfoot>
-        </table>
+                <tfoot>
+                    <tr>
+                        <th colspan="5" class="text-right">Subtotal:</th>
+                        <td class="currency">$ {{ grandSubtotal }}</td>
+                    </tr>
+                    <tr>
+                        <th colspan="5" class="text-right">Tax:</th>
+                        <td class="currency">$ {{ grandTaxAmount }}</td>
+                    </tr>
+                    <tr>
+                        <th colspan="5" class="text-right">Total:</th>
+                        <td class="currency">$ {{ grandTotal }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <p class="text-center"><a href="#" @click="clearSale">Clear Sale</a></p>
+        </div>
 
         <div v-else class="alert alert-info">Add an item to the order.</div>
 

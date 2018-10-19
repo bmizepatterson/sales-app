@@ -94,6 +94,7 @@ new Vue({
                 this.newItem.tax = 0;
 
                 this.saveToSession();
+                this.$refs.itemInput.focus();
             }
         },
 
@@ -104,6 +105,7 @@ new Vue({
                 return candidate;
             }
             this.error = 'Please enter an item description.';
+            this.$refs.itemInput.focus();
         },
 
         validateQty: function(qty) {
@@ -111,18 +113,28 @@ new Vue({
             if (qty < 1 || qty > 999) {
                 this.error = 'Please enter a valid quantity.';
                 this.newItem.qty = '';
+                this.$refs.qtyInput.focus();
             } else {
                 return candidate;
             }
         },
 
         validatePrice: function(price) {
-            // Cast to a number
-            let candidate = +price;
+            let candidate = price;
+            if (!candidate) {
+                // No empty strings!
+                this.error = 'Please enter a unit price.';
+            } else {
+                // Cast to number
+                candidate = +price;
+                if (isNaN(candidate)) {
+                    this.error = 'Please enter a valid unit price.';
+                }
+            }
 
-            if (isNaN(candidate)) {
-                this.error = 'Please enter a valid unit price.';
+            if (this.error) {
                 this.newItem.price = '';
+                this.$refs.priceInput.focus();
             } else {
                 return this.formatCurrency(candidate);
             }
@@ -137,6 +149,11 @@ new Vue({
 
         saveToSession: function() {
             sessionStorage.setItem('sales', JSON.stringify(this.items));
+        },
+
+        clearSale: function() {
+            this.items = [];
+            this.saveToSession();
         }
 
     }
