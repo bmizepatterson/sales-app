@@ -15,7 +15,7 @@
 
         <form class="form-inline mb-2">
             <label for="item" class="sr-only">Item</label>
-            <input v-model="newItem.description" id="item" type="text" class="form-control mb-2 mr-sm-2" placeholder="Item" size="40">
+            <input v-model="newItem.description" id="item" type="text" class="form-control mb-2 mr-sm-2" placeholder="Item">
 
             <label for="qty" class="sr-only">Quantity</label>
             <input v-model="newItem.qty" id="qty" type="number" class="form-control mb-2 mr-sm-2" placeholder="Qty" min="1" max="999" size="3">
@@ -39,14 +39,14 @@
         <div v-if="error" class="alert alert-warning">{{ error }}</div>
 
         <table v-if="items.length" class="table mt-5">
-            <thead>
+            <thead class="thead-light">
                 <tr>
-                    <th>Item</th>
-                    <th>Qty</th>
-                    <th class="text-right">Unit Price</th>
-                    <th class="text-right">Item Subtotal</th>
-                    <th class="text-right">Tax</th>
-                    <th class="text-right">Item Total</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Qty</th>
+                    <th class="text-right" scope="col">Unit Price</th>
+                    <th class="text-right" scope="col">Item Subtotal</th>
+                    <th class="text-right" scope="col">Tax</th>
+                    <th class="text-right" scope="col">Item Total</th>
                 </tr>
             </thead>
 

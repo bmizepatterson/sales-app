@@ -17,6 +17,12 @@ new Vue({
 
     },
 
+    created: function() {
+        if (localStorage.sales) {
+            this.items = JSON.parse(localStorage.sales);
+        }
+    },
+
     computed: {
 
         grandSubtotal: function() {
@@ -86,6 +92,8 @@ new Vue({
                 this.newItem.qty = '';
                 this.newItem.price = '';
                 this.newItem.tax = 0;
+
+                this.saveToDisk();
             }
         },
 
@@ -125,6 +133,10 @@ new Vue({
             n = n.toFixed(2);
             if (n) return n;
             return '-';
+        },
+
+        saveToDisk: function() {
+            localStorage.setItem('sales', JSON.stringify(this.items));
         }
 
     }
