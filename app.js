@@ -13,6 +13,8 @@ new Vue({
             taxed: true
         },
 
+        defaultTaxRate: 0.06,
+
         error: ''
 
     },
@@ -69,9 +71,9 @@ new Vue({
             // Validate user input
             let validItem = {
                 description: this.validateDescription(this.newItem.description),
-                qty: this.validateQty(this.newItem.qty),
-                price: this.validatePrice(this.newItem.price),
-                tax: this.newItem.taxed ? 0.06 : 0
+                qty:         this.validateQty(this.newItem.qty),
+                price:       this.validatePrice(this.newItem.price),
+                taxRate:     this.newItem.taxed ? this.defaultTaxRate : 0
             }
 
             if (!this.error) {
@@ -81,18 +83,13 @@ new Vue({
                     description: validItem.description,
                     qty:         validItem.qty,
                     price:       validItem.price,
-                    tax:         this.formatCurrency(validItem.tax),
+                    taxRate:     this.formatCurrency(validItem.taxRate),
                     subtotal:    this.formatCurrency(validItem.qty * validItem.price),
-                    taxAmount:   this.formatCurrency(validItem.qty * validItem.price * validItem.tax),
-                    total:       this.formatCurrency(validItem.qty * validItem.price + (validItem.qty * validItem.price * validItem.tax))
+                    taxAmount:   this.formatCurrency(validItem.qty * validItem.price * validItem.taxRate),
+                    total:       this.formatCurrency(validItem.qty * validItem.price + (validItem.qty * validItem.price * validItem.taxRate))
                 });
 
-                // Reset the form
-                this.newItem.description = '';
-                this.newItem.qty = '';
-                this.newItem.price = '';
-                this.newItem.tax = 0;
-
+                this.clearForm();
                 this.saveToSession();
                 this.$refs.itemInput.focus();
             }
@@ -141,10 +138,10 @@ new Vue({
         },
 
         formatCurrency: function(n) {
-            n = +n;
-            n = n.toFixed(2);
-            if (n) return n;
-            return '-';
+            n = +n;             // Cast to a number
+            n = n.toFixed(2);   // Fix to 2 decimal places
+            if (n) return n;    // Return if > 0
+            return '-';         // Return if 0
         },
 
         saveToSession: function() {
@@ -154,7 +151,11 @@ new Vue({
         clearSale: function() {
             this.items = [];
             this.saveToSession();
-        }
+        },
 
+        clearForm: function() {
+            this.newItem.description = this.newItem.qty = this.newItem.price = '';
+            this.newItem.taxed = true;
+        }
     }
 });
