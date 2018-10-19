@@ -39,11 +39,11 @@
         <div v-if="error" class="alert alert-warning">{{ error }}</div>
 
         <div v-if="items.length">
-            <table class="table mt-5">
+            <table class="table table-sm mt-5">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">Item</th>
-                        <th scope="col">Qty</th>
+                        <th class="text-center" scope="col">Qty</th>
                         <th class="text-right" scope="col">Unit Price</th>
                         <th class="text-right" scope="col">Item Subtotal</th>
                         <th class="text-right" scope="col">Tax</th>
@@ -54,26 +54,26 @@
                 <tbody>
                     <tr v-for="item in items">
                         <td>{{ item.description }}</td>
-                        <td>{{ item.qty }}</td>
-                        <td class="currency">$ {{ item.price }}</td>
-                        <td class="currency">$ {{ item.subtotal }}</td>
-                        <td class="currency">$ {{ item.taxAmount }}</td>
-                        <td class="currency">$ {{ item.total }}</td>
+                        <td class="text-center">{{ item.qty }}</td>
+                        <td class="currency">{{ item.price }}</td>
+                        <td class="currency">{{ item.subtotal }}</td>
+                        <td class="currency">{{ item.taxAmount }}</td>
+                        <td class="currency">{{ item.total }}</td>
                     </tr>
                 </tbody>
 
                 <tfoot>
                     <tr>
                         <th colspan="5" class="text-right">Subtotal:</th>
-                        <td class="currency">$ {{ grandSubtotal }}</td>
+                        <td class="currency">{{ grandSubtotal }}</td>
                     </tr>
                     <tr>
                         <th colspan="5" class="text-right">Tax:</th>
-                        <td class="currency">$ {{ grandTaxAmount }}</td>
+                        <td class="currency">{{ grandTaxAmount }}</td>
                     </tr>
                     <tr>
                         <th colspan="5" class="text-right">Total:</th>
-                        <td class="currency">$ {{ grandTotal }}</td>
+                        <td class="currency">{{ grandTotal }}</td>
                     </tr>
                 </tfoot>
             </table>

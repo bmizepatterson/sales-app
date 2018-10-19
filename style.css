@@ -4,3 +4,11 @@
 .currency {
     text-align: right;
 }
+.currency::before {
+    content: "$";
+    float:left;
+    padding-left: 10px;
+}
+tfoot {
+    border-top: 3px solid #dee2e6;
+}
