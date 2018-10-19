@@ -11,9 +11,9 @@
     padding-left: 10px;
 }
 #sales-table .action-col {
-    padding-left:0;
+    padding-left:4.8;
     padding-right:0;
-    width: 19px;
+    width: 23.8px;
 }
 #sales-table td:last-child,
 #sales-table th:last-child
@@ -29,4 +29,14 @@
 }
 #sales-table .delete-button:hover {
     color: #c82333;
+}
+
+
+/* VUE TRANSITIONS */
+.slide-fade-enter-active, .slide-fade-leave-active {
+    transition: .3s;
+}
+.slide-fade-enter, .slide-fade-leave-to {
+    transform: translateX(-10px);
+    opacity: 0;
 }

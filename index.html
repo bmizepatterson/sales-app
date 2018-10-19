@@ -56,7 +56,9 @@
                 <tbody>
                     <tr v-for="(item, index) in items" @mouseover="hover = index" @mouseout="hover = null">
                         <td class="action-col">
-                            <i v-if="hover == index" @click="deleteItem(index)" class="fas fa-minus-circle delete-button"></i>
+                            <transition name="slide-fade">
+                                <i v-if="hover == index" @click="deleteItem(index)" class="fas fa-minus-circle delete-button"></i>
+                            </transition>
                         </td>
                         <td>{{ item.description }}</td>
                         <td class="text-center">{{ item.qty }}</td>
@@ -78,7 +80,7 @@
                     </tr>
                     <tr class="bg-dark text-light">
                         <th colspan="6" class="text-right">Total:</th>
-                        <td class="currency">{{ grandTotal }}</td>
+                        <td class="currency font-weight-bold">{{ grandTotal }}</td>
                     </tr>
                 </tfoot>
             </table>
